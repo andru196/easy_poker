@@ -48,7 +48,7 @@ namespace ClassLibrary1
 					Console.Write(" ___ ");
 					break;
 				case 2:
-					Console.Write($" |{this.suit}| ");
+					Console.Write($" |{this.suit_ico}| ");
 					break;
 				case 3:
 					Console.Write($" |{this.value}| ");
