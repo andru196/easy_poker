@@ -14,10 +14,10 @@ namespace ClassLibrary1
 		public string suit_ico;
 		public string value;
 		private System.ConsoleColor color;
-		public Card(string a, string b) // Конструктор. Принимает две строки:
-		{
-			this.suit = a;			// Первая задаёт рубашку
-			this.value = b;				// Вторая значение карты
+		public Card(string a, string b) //	Конструктор класса. 
+		{                               //	 Принимает две строки:
+			this.suit = a;			//		 Первая задаёт рубашку
+			this.value = b;				//	Вторая значение карты
 			power = Array.IndexOf(indexator, b);
 			switch (a)
 			{
@@ -39,13 +39,13 @@ namespace ClassLibrary1
 					break;
 			}
 		}
-		public void Print_Str(int i)
-		{
-			Console.ForegroundColor = this.color;
-			switch (i)
-			{
-				case 1:
-					Console.Write(" ___ ");
+		public void Print_Str(int i) // Метод печатающий i-ую часть карты. Толко часть, потому что карта занимает несколько строк, при том что на одной страке может быть несколько карт
+		{//								Принимает число i, обозначающее какую строку карты печатать, от 1 до 4
+			Console.ForegroundColor = this.color; // Ничего не возвращает, только печатает, например 4 вызова подряд:
+			switch (i)                              // ___ 
+			{                                       // |♠| 
+				case 1:                             // |X| 
+					Console.Write(" ___ ");         // ___ 
 					break;
 				case 2:
 					Console.Write($" |{this.suit_ico}| ");
@@ -60,22 +60,22 @@ namespace ClassLibrary1
 					break;
 			}
 			Console.ResetColor();
-		} // Метод печатающий i-ую часть карты. Толко часть, потому что карта занимает несколько строк, при том что на одной страке может быть несколько карт
-		public override string ToString()
-		{
-			return ($"{value}{this.suit}");
-		} // Метод возвращающий строковое представление карты
-		public int CompareTo(object o)
-		{
-			Card c = o as Card;
+		} 
+		public override string ToString() //Метод представляющий экземпляр класса в строке
+		{                               // ничего не принимает
+			return ($"{value}{this.suit}"); // Возвращает строку со значением и рубашкой карты, например: AH, или 2S
+		} 
+		public int CompareTo(object o) // Метод для сравнения карты с другой картой
+		{							// Принимает на вход экземпляр карты
+			Card c = o as Card;		// Возвращает число: -1, 0, 1
 			if (c != null)
 				return this.power.CompareTo(c.power);
 			else
 				throw new Exception("Невозможно сравнить два объекта");
-		} // Метод для реализации интерфейса IComparable: позднее помогает сортировать массив карт
-		public int CompareTo(Card p)
-		{
-			return this.power.CompareTo(p.power);
+		} 
+		public int CompareTo(Card p) // Метод для сравнения карты с другой картой
+		{                               // Принимает на вход экземпляр карты
+			return this.power.CompareTo(p.power);  // Возвращает число: -1, 0, 1
 		}
 	}
 	public class Deck // Класс колоды
@@ -92,10 +92,10 @@ namespace ClassLibrary1
 				Console.WriteLine("ERROR");
 				}
 			}
-		public Deck()
-		{
-			string	s;
-			string	v;
+		public Deck()  // Конструктор колоды
+		{           // заполняет экземпляр картами в строго определённом порядке
+			string	s; // на вход ничего не принимает
+			string	v; // НИчего не возвращает
 			for (int i = 0; i < 13; i++)
 			{
 				switch (i)
@@ -143,22 +143,22 @@ namespace ClassLibrary1
 					deck[(i * 4) + j] = new Card(s, v);
 				}
 			}
-		} // Конструктор колоды - заполняет её картами в строго определённом порядке
-		public void Shuffle()
-		{
-			var random = new Random(DateTime.Now.Millisecond);
-			deck = deck.OrderBy(x => random.Next()).ToArray();
+		} 
+		public void Shuffle() // Метод для перемешивания колоды не принимает и не возвращает ничего
+		{					// Ничего не принимает
+			var random = new Random(DateTime.Now.Millisecond); // Ничего не возвращает
+			deck = deck.OrderBy(x => random.Next()).ToArray(); // Изменяет экземпляр к которому вызван
 			Array.Reverse(deck);
-		} // Метод для перемешивания колоды не принимает и не возвращает ничего
-		public Card get_One()
-		{
-			Card c = new Card(deck[deck.Length - 1].suit, deck[deck.Length - 1].value);
+		} 
+		public Card get_One()  // Метод возвращающий последнюю карту колоды, заранее удаляя ее оттуда
+		{					// Принимает ничего
+			Card c = new Card(deck[deck.Length - 1].suit, deck[deck.Length - 1].value); // Возвращает последнюю карту из колоды
 			Array.Resize(ref deck, deck.Length - 1);
 			return c;
-		} // Метод возвращающий последнюю карту колоды, заранее удаляя ее оттуда
-		public override string ToString() // Метод позволяющий получить строку, содержащую все карты в колоде
-		{
-			string str = "";
+		}
+		public override string ToString() // Метод позволяющий получить строковое представление всей колоды
+		{								// Ничего не принимает
+			string str = "";			// Возвращает строку, со всеми картами в колоде, краткий пример: "AS 4S 3H"
 			foreach (Card el in deck)
 			{
 				str = String.Concat(str, " ", el.ToString());
@@ -170,8 +170,8 @@ namespace ClassLibrary1
 	{
 		public Card[] cards = new Card[2]; 
 		public virtual void Print() // Метод печатающий содержимое руки (2 карты)
-		{
-			for (int i = 0; i < 4; i++)
+		{							// Ничего не принимает
+			for (int i = 0; i < 4; i++)	// Ничего не возвращает, только печатает
 			{
 				cards[0].Print_Str(i + 1);
 				cards[1].Print_Str(i + 1);
@@ -179,15 +179,15 @@ namespace ClassLibrary1
 			}
 			Console.WriteLine("\n");
 		}
-		public override string ToString()
-		{
-			return (String.Concat(cards[0].ToString(), " ", cards[1].ToString()));
-		} // Метод возвращающий строку с содержимым руки (в краткой форме)
-		public Hand(Card c1, Card c2)
-		{
-			this.cards[0] = c1;
+		public override string ToString() // Метод возвращающий строку с содержимым руки (в краткой форме)
+		{									// Ничего не принимает
+			return (String.Concat(cards[0].ToString(), " ", cards[1].ToString())); // Возвращает строку с кратким содержимым руки, например: "AH JS"
+		} 
+		public Hand(Card c1, Card c2) // Конструктор руки.  и заполняет ими внутренний массив карт
+		{                           // Принимает 2 экземпляра карт
+			this.cards[0] = c1;		//Ничего не возвращает
 			this.cards[1] = c2;
-		} // Конструктор руки. Принимает 2 экземпляра карт и заполняет ими внутренний массив карт
+		} 
 	} 
 	public class Field : Hand // Класс игрового поля/стола
 	{
@@ -202,8 +202,8 @@ namespace ClassLibrary1
 
 		}
 		public void AppendOne(Card car) // Метод для добавления карты на стол. Принимает экземпляр карты, занося его во внутренний массив, ничего не возвращат.
-		{
-			if (this.Length == 3)
+		{								// Принимает экземпляр карты
+			if (this.Length == 3)		// ничего не возвращает
 			{
 				cards[3] = car;
 				this.Length++;
@@ -215,8 +215,8 @@ namespace ClassLibrary1
 			}
 		}
 		public override void Print() // метод печатающий все карты на столе
-		{
-			for (int i = 1; i <= 4; i++)
+		{								// Ничего не возвращает
+			for (int i = 1; i <= 4; i++)// Ничего не принимает
 			{
 				for (int j = 0; j < this.Length; j++)
 					cards[j].Print_Str(i);
@@ -224,9 +224,9 @@ namespace ClassLibrary1
 			}
 			Console.WriteLine("");
 		}
-		public Field(Card c1, Card c2, Card c3) // Конструктор игрового поля: принимает 3 экземпляра карт
-			: base(c1, c2)
-		{
+		public Field(Card c1, Card c2, Card c3) // Конструктор игрового поля
+			: base(c1, c2)                      // принимает 3 экземпляра карт
+		{										// Возвращает ничего
 			cards[0] = c1;
 			cards[1] = c2;
 			cards[2] = c3;
@@ -241,11 +241,11 @@ namespace ClassLibrary1
 		int C;
 		int S;
 		int Length; // количество карт в игре
-		public Analizer(Hand h, Field f) // Конструктор: принимает экземпляр руки и игрового поля
-		{									// Добавляет их карты в свой массив
-			h.cards.CopyTo(this.cards, 0);
-			f.Cards.CopyTo(this.cards, 2);
-			this.Length = 2 + f.Length;
+		public Analizer(Hand h, Field f) // Конструктор:
+		{									
+			h.cards.CopyTo(this.cards, 0);//  принимает экземпляр руки и игрового поля
+			f.Cards.CopyTo(this.cards, 2);// Добавляет их карты в свой массив
+			this.Length = 2 + f.Length;	// Ничего не возвращает
 			D = H = C = S = 0;
 			for (int i = 0; i < this.Length; i++)
 			{
@@ -301,9 +301,9 @@ namespace ClassLibrary1
 			}
 			else Console.WriteLine($"Стрит флеш, старшая карта {str}{str1}!!!");
 		}
-		string Pair_Search()
-		{
-			int i = this.cards.Length;
+		string Pair_Search() // Метод для поиска комбинации "Пара"
+		{					// Принимает ничего
+			int i = this.cards.Length; // Возвращает  возвращает null если поиск не удачен или значение карты, участвующией в комбинации, например если есть пара вольтов: "J"
 			for (int j = i - 1; j > 7 - this.Length; j--)
 			{
 				if (cards[j].value == cards[j - 1].value)
@@ -320,10 +320,10 @@ namespace ClassLibrary1
 				}
 			}
 			return (null);
-		} // Метод для поиска комбинации "Пара", возвращает null если поиск не удачен или значение карты, участвующией в комбинации
-		string Pair_Search(string s) // Метод для поиска комбинации "Пара", возвращает null если поиск не удачен или значение карты, участвующией в комбинации, принимает значение карты, для последующего игнорирования уже найденной пары
-		{
-			int i = this.cards.Length;
+		} 
+		string Pair_Search(string s) // Метод для поиска комбинации "Пара", после обнаружения одной пары
+		{                               // возвращает null если поиск не удачен или значение карты, участвующией в комбинации, принимает значение карты, для последующего игнорирования уже найденной пары, например если у нас пара королев: "Q"
+			int i = this.cards.Length; // Принимае значение карты, пара которой уже обнаружена и должна быть пропущена, например "A"
 			for (int j = i - 1; j > 7 - Length; j--)
 			{
 				if (cards[j].value == s)
@@ -346,9 +346,9 @@ namespace ClassLibrary1
 			}
 			return (null);
 		}	
-		private  (string, string) Two_Pairs_Search() // Метод для поиска комбинации "Две пары", возвращает (null,null) если поиск не удачен или значения карт, участвующих в комбинации
-		{
-			string s;
+		private  (string, string) Two_Pairs_Search()	// Метод для поиска комбинации "Две пары", 
+		{												//Ничего не принимает
+			string s;                                   //возвращает (null,null) если поиск не удачен или значения карт, участвующих в комбинации, например если найдено две пары 4 и 2: ("4", "2")
 			string s2;
 			if ((s = Pair_Search()) != null)
 				if ((s2 = Pair_Search(s)) != null)
@@ -358,10 +358,10 @@ namespace ClassLibrary1
 				}
 			return (null, null);
 		}
-		(string, string) Full_House_Search() // Метод для поиска комбинации "Фулл-Хаус", возвращает (null,null) если поиск не удачен или значения карт, участвующих в комбинации, первая соответствует тройке, вторая паре
-		{
-			string s1;
-			string s2;
+		(string, string) Full_House_Search()	// Метод для поиска комбинации "Фулл-Хаус"
+		{										//Ничего не принимает
+			string s1;                          //Возвращает (null,null) если поиск не удачен или значения карт, участвующих в комбинации, первая соответствует тройке, вторая паре
+			string s2;							// Например найден фулл хаус из сета тузов и пары двоек: ("A", "2")
 			if ((s1 = Three_Search()) != null)
 				if ((s2 = Pair_Search()) != null)
 					return (s1, s2);
@@ -369,9 +369,9 @@ namespace ClassLibrary1
 					return (s1, s2);
 			return (null, null);
 		}
-		string Three_Search() // Метод для поиска комбинации "Сет", возвращает null если поиск не удачен или значение карты, участвующией в комбинации
-		{
-			int i = this.cards.Length;
+		string Three_Search() // Метод для поиска комбинации "Сет", 
+		{                       //Принимает ничего
+			int i = this.cards.Length; //Возвращает null если поиск не удачен или значение карты, участвующией в комбинации, например найден сет из королей: "K"
 			for (int j = i - 1; j > 7 - Length; j--)
 			{
 				if (cards[j].value == cards[j - 1].value)
@@ -388,9 +388,9 @@ namespace ClassLibrary1
 			}
 			return (null);
 		}
-		string Three_Search(string s)  // Метод для поиска комбинации "Сет", возвращает null если поиск не удачен или значение карты, участвующией в комбинации, принимает значение карты, для последующего игнорирования уже найденного сета
-		{
-			int i = this.cards.Length;
+		string Three_Search(string s)   // Метод для поиска комбинации "Сет" и пропуска найденного сета
+		{                               //Принимает значение первого сета, например: "A"
+			int i = this.cards.Length;  //Возвращает null если поиск не удачен или значение карты, участвующией в комбинации, например  найден сет из королей: "K"
 			for (int j = i - 1; j > 7 - Length; j--)
 			{
 				if (cards[j].value == s)
@@ -409,10 +409,10 @@ namespace ClassLibrary1
 			}
 			return (null);
 		}
-		string Four_of_Kind_Search()  // Метод для поиска комбинации "Карэ", возвращает null если поиск не удачен или значение карты, участвующией в комбинации
-		{
-			int i = this.cards.Length;
-			for (int j = i - 1; j > 7 - Length; j--)
+		string Four_of_Kind_Search()  // Метод для поиска комбинации "Карэ"
+		{								//Ничего не возвращает
+			int i = this.cards.Length;  //Возвращает возвращает null если поиск не удачен или значение карты, участвующией в комбинации
+			for (int j = i - 1; j > 7 - Length; j--) // Например если найдено карэ из двоек: "2"
 			{
 				if (cards[j].value == cards[j - 1].value)
 				{
@@ -428,11 +428,11 @@ namespace ClassLibrary1
 			}
 			return (null);
 		}
-		string Street_Search() // Метод для поиска комбинации "Стрит", возвращает null если поиск не удачен или значение старшей! карты, участвующией в комбинации
-		{
-			int i = 0;
-			int j = this.cards.Length - 1;
-			string str = null;
+		string Street_Search()	// Метод для поиска комбинации "Стрит"
+		{						//Ничего не принимает
+			int i = 0;          //Возвращает null если поиск не удачен или значение старшей! карты, участвующией в комбинации
+			int j = this.cards.Length - 1; //Напимер у нас есть следующий стрит: 62345, тогда вернется срока "6"
+			string str = null;				
 			while (j != 0 && i < 5)
 			{
 				
@@ -464,10 +464,10 @@ namespace ClassLibrary1
 				i++;
 			return ( i == 5 ? str : null);
 		}
-		string Flush_Search() // Метод для поиска комбинации "Флеш", возвращает null если поиск не удачен или рубашку карт, участвующих в комбинации
-		{
-			if (D > 4)
-				return "D";
+		string Flush_Search()	// Метод для поиска комбинации "Флеш"
+		{						//Ничего не принимает
+			if (D > 4)          //Возвращает null если поиск не удачен или рубашку карт, участвующих в комбинации
+				return "D";		//Например имеется флеш из черв(H), тогда вернется строка "H"
 			else if (H > 4)
 				return "H";
 			else if (C > 4)
@@ -478,10 +478,10 @@ namespace ClassLibrary1
 				return (null);
 
 		}
-		(string, string) Straight_Flush_Search() // Метод для поиска комбинации "Стрит-Флеш", возвращает (null,null) если поиск не удачен или значение и масть мтаршей карты участвующей в комбинации.
-		{
-			string s1;
-			string s2;
+		(string, string) Straight_Flush_Search() // Метод для поиска комбинации "Стрит-Флеш"
+		{										//Ничего не принимает
+			string s1;                          //Возвращает (null,null) если поиск не удачен или значение и масть старшей карты участвующей в комбинации.
+			string s2;									//Например имеется стрит-флеш из следующих треф 87654, тогда мы получим кортеж строк: ("C", "8")
 			if ((s1 = Flush_Search()) != null)
 			{
 				if ((s2 = Street_Search()) != null)

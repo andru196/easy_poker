@@ -7,8 +7,8 @@ namespace easy_Poker
     class Program
     {
 		static bool	Read_Answer(string s) // Интерфейсная функция: задаёт вопрос и принимает ответы
-		{						// принимает текст вопроса, возвращает ответ
-			Console.WriteLine(s);
+		{						// принимает текст вопроса, 
+			Console.WriteLine(s); // возвращает ответ типа bool: true/false
 			while (true)
 			{
 				string str = Console.ReadLine();
